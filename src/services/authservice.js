@@ -1,16 +1,16 @@
 import api from "./api";
 
 export const authService = {
-  async login(username, password) {
-    const { data } = await api.post("/auth/login", { username, password });
+  async login(email, password) {
+    const { data } = await api.post("/auth/login", { email, password });
     localStorage.setItem("token", data.token);
-    return data.user;
+    return data;
   },
 
   async register(username, email, password) {
     const { data } = await api.post("/auth/register", { username, email, password });
     localStorage.setItem("token", data.token);
-    return data.user;
+    return data;
   },
 
   async getMe() {

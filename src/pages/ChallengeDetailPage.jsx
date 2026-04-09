@@ -98,10 +98,11 @@ export default function ChallengeDetailPage({ id }) {
             by{" "}
             <button
               className="link-btn"
-              onClick={() => navigate(ROUTES.PROFILE, challenge.authorId)}
+             onClick={() => navigate(ROUTES.PROFILE, challenge.authorId || challenge.author?.id)}
             >
-              {challenge.author}
-            </button>{" "}
+              
+              {challenge.author?.username || challenge.author}
+            </button>
             · {challenge.createdAt}
           </p>
 

@@ -24,8 +24,14 @@ export const challengeService = {
   },
 
   async create(challenge) {
-    const { data } = await api.post("/challenges", challenge);
-    return data;
+    try {
+      console.log("Sending:", JSON.stringify(challenge, null, 2));
+      const { data } = await api.post("/challenges", challenge);
+      return data;
+    } catch (err) {
+      console.log("Error:", err.response?.data);
+      throw err;
+    }
   },
 
   async update(id, challenge) {

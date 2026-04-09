@@ -8,11 +8,11 @@ export const userService = {
 
   async getChallenges(userId) {
     const { data } = await api.get(`/users/${userId}/challenges`);
-    return data;
+    return Array.isArray(data) ? data : data.items || [];
   },
 
   async getSolutions(userId) {
     const { data } = await api.get(`/users/${userId}/solutions`);
-    return data;
+    return Array.isArray(data) ? data : data.items || [];
   },
 };

@@ -29,7 +29,6 @@ export function AuthProvider({ children }) {
     loading: true,
   });
 
-  // On app load, check if user has a saved token
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -45,23 +44,23 @@ export function AuthProvider({ children }) {
       });
   }, []);
 
-  const login = useCallback(async (username, password) => {
+  const login = useCallback(async (email, password) => {
     try {
-      const user = await authService.login(username, password);
-      dispatch({ type: AUTH_ACTIONS.LOGIN, payload: user });
+      const data = await authService.login(email, password);
+      dispatch({ type: AUTH_ACTIONS.LOGIN, payload: data });
       return { success: true };
     } catch (err) {
       return {
         success: false,
-        error: err.response?.data?.message || "Login failed.",
+        error: err.response?.data?.message || "Invalid email or password.",
       };
     }
   }, []);
 
   const register = useCallback(async (username, email, password) => {
     try {
-      const user = await authService.register(username, email, password);
-      dispatch({ type: AUTH_ACTIONS.LOGIN, payload: user });
+      const data = await authService.register(username, email, password);
+      dispatch({ type: AUTH_ACTIONS.LOGIN, payload: data });
       return { success: true };
     } catch (err) {
       return {
