@@ -2,9 +2,19 @@ import api from "./api";
 
 export const challengeService = {
   async getAll({ language, difficulty, search, page = 1 }) {
-    const { data } = await api.get("/challenges", {
-      params: { language, difficulty, search, page },
-    });
+    const params = { page };
+
+    if (language && language !== "All") {
+      params.language = language;
+    }
+    if (difficulty && difficulty !== "All") {
+      params.difficulty = difficulty;
+    }
+    if (search && search.trim() !== "") {
+      params.search = search;
+    }
+
+    const { data } = await api.get("/challenges", { params });
     return data;
   },
 
