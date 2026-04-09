@@ -1,0 +1,298 @@
+/* ── Buttons ─────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  transition: all var(--transition);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.btn--primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+}
+
+.btn--ghost:hover {
+  border-color: var(--border-hover);
+  color: var(--text);
+}
+
+.btn--sm {
+  padding: 7px 14px;
+  font-size: 13px;
+}
+
+.btn--full {
+  width: 100%;
+  justify-content: center;
+}
+
+.btn--icon {
+  padding: 8px;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  border-radius: var(--radius-sm);
+}
+
+.btn--icon:hover {
+  border-color: var(--border-hover);
+}
+
+.btn--voted-up {
+  color: var(--accent) !important;
+  border-color: rgba(0, 255, 136, 0.3) !important;
+  background: var(--accent-bg) !important;
+}
+
+.btn--voted-down {
+  color: var(--danger) !important;
+  border-color: rgba(255, 68, 102, 0.3) !important;
+  background: var(--danger-bg) !important;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0;
+}
+
+.link-btn:hover {
+  text-decoration: underline;
+}
+
+/* ── Cards ───────────────────────────── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.card--accent {
+  border-color: rgba(0, 255, 136, 0.15);
+}
+
+/* ── Avatar ──────────────────────────── */
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  background: hsl(var(--avatar-hue), 55%, 42%);
+}
+
+.avatar--sm { width: 30px; height: 30px; font-size: 12px; }
+.avatar--md { width: 38px; height: 38px; font-size: 15px; }
+.avatar--lg { width: 52px; height: 52px; font-size: 21px; }
+.avatar--xl { width: 72px; height: 72px; font-size: 28px; }
+
+/* ── Badge ───────────────────────────── */
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.badge--default { color: var(--text-dim); background: var(--bg-card); }
+.badge--easy    { color: var(--success); background: var(--success-bg); }
+.badge--medium  { color: var(--warning); background: var(--warning-bg); }
+.badge--hard    { color: var(--danger);  background: var(--danger-bg); }
+.badge--lang    { color: var(--info);    background: rgba(51, 153, 255, 0.1); }
+.badge--danger  { color: var(--danger);  background: var(--danger-bg); }
+.badge--special { color: var(--accent-alt); background: var(--accent-alt-bg); }
+
+/* ── Stat Block ──────────────────────── */
+.stat-block {
+  text-align: center;
+  padding: 16px;
+}
+
+.stat-block__value {
+  font-size: 26px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--text);
+  line-height: 1.1;
+}
+
+.stat-block__label {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 5px;
+  font-family: var(--font-mono);
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+  margin-bottom: 36px;
+}
+
+.stats-row .stat-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+/* ── Inputs ──────────────────────────── */
+.input,
+.textarea,
+.select {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  outline: none;
+  transition: border-color var(--transition);
+  width: 100%;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  border-color: var(--accent-dim);
+}
+
+.input--search {
+  padding-left: 38px;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.textarea--mono {
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.select {
+  cursor: pointer;
+  width: auto;
+}
+
+.select--full {
+  width: 100%;
+}
+
+/* ── Form Helpers ────────────────────── */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-field__label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: var(--font-mono);
+}
+
+.form-field__error {
+  font-size: 12px;
+  color: var(--danger);
+}
+
+.form-stack {
+  display: grid;
+  gap: 20px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* ── Code Block ──────────────────────── */
+.code-block {
+  margin-bottom: 24px;
+}
+
+.code-block__label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: var(--font-mono);
+  margin-bottom: 8px;
+}
+
+.code-block__pre {
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.7;
+  color: #c0d0e0;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ── Empty State ─────────────────────── */
+.empty-state {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  padding: 48px;
+  color: var(--text-muted);
+}
