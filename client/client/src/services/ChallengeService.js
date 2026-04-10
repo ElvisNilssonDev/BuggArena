@@ -2,19 +2,9 @@ import api from "./api";
 
 export const challengeService = {
   async getAll({ language, difficulty, search, page = 1 }) {
-    const params = { page };
-
-    if (language && language !== "All") {
-      params.language = language;
-    }
-    if (difficulty && difficulty !== "All") {
-      params.difficulty = difficulty;
-    }
-    if (search && search.trim() !== "") {
-      params.search = search;
-    }
-
-    const { data } = await api.get("/challenges", { params });
+    const { data } = await api.get("/challenges", {
+      params: { language, difficulty, search, page },
+    });
     return data;
   },
 
@@ -24,14 +14,8 @@ export const challengeService = {
   },
 
   async create(challenge) {
-    try {
-      console.log("Sending:", JSON.stringify(challenge, null, 2));
-      const { data } = await api.post("/challenges", challenge);
-      return data;
-    } catch (err) {
-      console.log("Error:", err.response?.data);
-      throw err;
-    }
+    const { data } = await api.post("/challenges", challenge);
+    return data;
   },
 
   async update(id, challenge) {
