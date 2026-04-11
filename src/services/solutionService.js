@@ -1,10 +1,10 @@
 import api from "./api";
 
 export const solutionService = {
-  async submit(challengeId, { fixedCode, explanation }) {
+  async submit(challengeId, { fixedCode, explanation, timeToSolveSeconds }) {
     const { data } = await api.post(
       `/challenges/${challengeId}/solutions`,
-      { fixedCode, explanation }
+      { fixedCode, explanation, timeToSolveSeconds: 1 }
     );
     return data;
   },
