@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg:             #07070d;
+  --bg-card:        rgba(255, 255, 255, 0.025);
+  --bg-card-hover:  rgba(255, 255, 255, 0.045);
+  --border:         rgba(255, 255, 255, 0.06);
+  --border-hover:   rgba(0, 255, 136, 0.2);
+
+  --text:           #d8d8e4;
+  --text-dim:       #707088;
+  --text-muted:     #50506a;
+
+  --accent:         #00ff88;
+  --accent-dim:     #00cc6a;
+  --accent-bg:      rgba(0, 255, 136, 0.08);
+  --accent-alt:     #b44aff;
+  --accent-alt-bg:  rgba(180, 74, 255, 0.1);
+
+  --danger:         #ff4466;
+  --danger-bg:      rgba(255, 68, 102, 0.1);
+  --warning:        #ffaa22;
+  --warning-bg:     rgba(255, 170, 34, 0.1);
+  --success:        #22cc66;
+  --success-bg:     rgba(34, 204, 102, 0.1);
+  --info:           #3399ff;
+
+  --gold:           #ffbb33;
+  --silver:         #b0b8c8;
+  --bronze:         #cc8844;
+
+  --font-body:      'DM Sans', system-ui, sans-serif;
+  --font-mono:      'Fira Code', 'Menlo', monospace;
+
+  --radius:         10px;
+  --radius-sm:      6px;
+  --radius-pill:    999px;
+  --transition:     0.18s ease;
+}
