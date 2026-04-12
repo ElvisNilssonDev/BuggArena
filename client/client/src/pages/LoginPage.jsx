@@ -33,20 +33,20 @@ export default function LoginPage() {
       if (result.success) {
         navigate(ROUTES.HOME);
       } else {
-        setErrors({ email: result.error });
+        setErrors({ username: result.error });
       }
     } else {
       const valid = validate({
-        email: (v) => (!v.trim() ? "Required." : null),
+        username: (v) => (!v.trim() ? "Required." : null),
         password: (v) => (!v.trim() ? "Required." : null),
       });
       if (!valid) return;
 
-      const result = await auth.login(values.email, values.password);
+      const result = await auth.login(values.username, values.password);
       if (result.success) {
         navigate(ROUTES.HOME);
       } else {
-        setErrors({ email: result.error });
+        setErrors({ username: result.error });
       }
     }
   }, [isRegister, values, validate, auth, navigate, setErrors]);
@@ -79,38 +79,38 @@ export default function LoginPage() {
         </div>
 
         <div className="card form-stack">
+          <FormField
+            label="Username"
+            id="auth-user"
+            error={errors.username}
+          >
+            <input
+              id="auth-user"
+              className="input"
+              value={values.username}
+              onChange={handleChange("username")}
+              placeholder="Enter your username"
+              autoComplete="username"
+            />
+          </FormField>
+
           {isRegister && (
             <FormField
-              label="Username"
-              id="auth-user"
-              error={errors.username}
+              label="Email"
+              id="auth-email"
+              error={errors.email}
             >
               <input
-                id="auth-user"
+                id="auth-email"
                 className="input"
-                value={values.username}
-                onChange={handleChange("username")}
-                placeholder="Enter your username"
-                autoComplete="username"
+                type="email"
+                value={values.email}
+                onChange={handleChange("email")}
+                placeholder="you@example.com"
+                autoComplete="email"
               />
             </FormField>
           )}
-
-          <FormField
-            label="Email"
-            id="auth-email"
-            error={errors.email}
-          >
-            <input
-              id="auth-email"
-              className="input"
-              type="email"
-              value={values.email}
-              onChange={handleChange("email")}
-              placeholder="you@example.com"
-              autoComplete="email"
-            />
-          </FormField>
 
           <FormField
             label="Password"

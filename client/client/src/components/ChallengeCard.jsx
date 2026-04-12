@@ -4,16 +4,6 @@ import { ROUTES } from "../constants";
 import Badge from "./ui/Badge";
 import Stat from "./ui/Stat";
 
-function getAuthorName(author) {
-  if (!author) return "Unknown";
-  if (typeof author === "string") return author;
-  return author.username || "Unknown";
-}
-
-function getAuthorId(challenge) {
-  return challenge.authorId || challenge.author?.id || null;
-}
-
 function ChallengeCard({ challenge }) {
   const { navigate } = useNav();
 
@@ -50,15 +40,15 @@ function ChallengeCard({ challenge }) {
         </div>
         <h3 className="challenge-card__title">{challenge.title}</h3>
         <p className="challenge-card__meta">
-          by <span className="text-accent-dim">{getAuthorName(challenge.author)}</span> ·{" "}
+          by <span className="text-accent-dim">{challenge.author}</span> ·{" "}
           {challenge.createdAt}
         </p>
       </div>
 
       <div className="challenge-card__stats">
         <Stat value={challenge.maxPoints} label="pts" accent="var(--accent)" />
-        <Stat value={challenge.solutions || 0} label="solves" />
-        <Stat value={challenge.votes || 0} label="votes" />
+        <Stat value={challenge.solutions} label="solves" />
+        <Stat value={challenge.votes} label="votes" />
       </div>
     </article>
   );

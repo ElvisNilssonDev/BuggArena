@@ -10,14 +10,26 @@ import CodeBlock from "../components/ui/CodeBlock";
 import VoteWidget from "../components/VoteWidget";
 import SolutionForm from "../components/SolutionForm";
 
+function getAuthorName(author) {
+  if (!author) return "Unknown";
+  if (typeof author === "string") return author;
+  return author.username || "Unknown";
+}
+
+function getAuthorId(challenge) {
+  return challenge.authorId || challenge.author?.id || null;
+}
+
 export default function ChallengeDetailPage({ id }) {
   const { navigate } = useNav();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const [challenge, setChallenge] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [startTime] = useState(() => Date.now());
 
   useEffect(() => {
     setLoading(true);
@@ -33,10 +45,12 @@ export default function ChallengeDetailPage({ id }) {
   const handleSolutionSubmit = useCallback(
     async (values) => {
       setSubmitting(true);
+      const timeToSolveSeconds = Math.max(1, Math.round((Date.now() - startTime) / 1000));
       try {
         await solutionService.submit(id, {
           fixedCode: values.code,
           explanation: values.explanation,
+          timeToSolveSeconds,
         });
         setSubmitted(true);
       } catch {
@@ -45,7 +59,25 @@ export default function ChallengeDetailPage({ id }) {
         setSubmitting(false);
       }
     },
-    [id]
+    [id, startTime]
+  );
+
+  const handleDelete = useCallback(async () => {
+    if (!window.confirm("Are you sure you want to delete this challenge? This cannot be undone.")) {
+      return;
+    }
+    setDeleting(true);
+    try {
+      await challengeService.remove(id);
+      navigate(ROUTES.CHALLENGES);
+    } catch {
+      setError("Failed to delete challenge.");
+      setDeleting(false);
+    }
+  }, [id, navigate]);
+
+  const isOwner = isAuthenticated && user && challenge && (
+    user.id === getAuthorId(challenge)
   );
 
   if (loading) {
@@ -74,12 +106,26 @@ export default function ChallengeDetailPage({ id }) {
 
   return (
     <main className="page">
-      <button
-        className="btn btn--ghost btn--sm"
-        onClick={() => navigate(ROUTES.CHALLENGES)}
-      >
-        <Icon name="chevronLeft" size={16} /> Back to Challenges
-      </button>
+      <div className="page-header">
+        <button
+          className="btn btn--ghost btn--sm"
+          onClick={() => navigate(ROUTES.CHALLENGES)}
+        >
+          <Icon name="chevronLeft" size={16} /> Back to Challenges
+        </button>
+
+        {isOwner && (
+          <button
+            className="btn btn--ghost btn--sm"
+            onClick={handleDelete}
+            disabled={deleting}
+            style={{ color: "var(--danger)", borderColor: "rgba(248, 113, 113, 0.2)" }}
+          >
+            <Icon name="plus" size={14} style={{ transform: "rotate(45deg)" }} />
+            {deleting ? "Deleting..." : "Delete Challenge"}
+          </button>
+        )}
+      </div>
 
       <div className="detail-layout">
         <article className="detail-main">
@@ -98,11 +144,10 @@ export default function ChallengeDetailPage({ id }) {
             by{" "}
             <button
               className="link-btn"
-             onClick={() => navigate(ROUTES.PROFILE, challenge.authorId || challenge.author?.id)}
+              onClick={() => navigate(ROUTES.PROFILE, getAuthorId(challenge))}
             >
-              
-              {challenge.author?.username || challenge.author}
-            </button>
+              {getAuthorName(challenge.author)}
+            </button>{" "}
             · {challenge.createdAt}
           </p>
 
@@ -130,7 +175,7 @@ export default function ChallengeDetailPage({ id }) {
             </div>
           )}
 
-          {isAuthenticated && !submitted && (
+          {isAuthenticated && !isOwner && !submitted && !submitting && (
             <SolutionForm onSubmit={handleSolutionSubmit} />
           )}
 
@@ -169,7 +214,7 @@ export default function ChallengeDetailPage({ id }) {
 
         <aside className="detail-sidebar">
           <div className="card">
-            <VoteWidget initialCount={challenge.votes} />
+            <VoteWidget initialCount={challenge.votes || 0} />
           </div>
 
           <div className="card sidebar-reward">
@@ -183,7 +228,7 @@ export default function ChallengeDetailPage({ id }) {
             <dl className="sidebar-dl">
               <div>
                 <dt>Solutions</dt>
-                <dd>{challenge.solutions}</dd>
+                <dd>{challenge.solutions || 0}</dd>
               </div>
               <div>
                 <dt>Language</dt>
