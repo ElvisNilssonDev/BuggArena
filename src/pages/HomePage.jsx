@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNav } from "../hooks/useNav";
 import { ROUTES } from "../constants";
 import { challengeService } from "../services/challengeService";
+import { leaderboardService } from "../services/leaderboardService";
 import Icon from "../components/ui/Icon";
 import Stat from "../components/ui/Stat";
 import ChallengeCard from "../components/ChallengeCard";
@@ -9,14 +10,30 @@ import ChallengeCard from "../components/ChallengeCard";
 export default function HomePage() {
   const { navigate } = useNav();
   const [trending, setTrending] = useState([]);
+  const [stats, setStats] = useState({ challenges: 0, players: 0 });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    challengeService
-      .getAll({ language: "All", difficulty: "All", search: "" })
-      .then((data) => setTrending(data.items.slice(0, 3)))
-      .catch(() => setTrending([]))
-      .finally(() => setLoading(false));
+    const loadData = async () => {
+      try {
+        const [challengeData, leaderboardData] = await Promise.all([
+          challengeService.getAll({ language: "All", difficulty: "All", search: "" }),
+          leaderboardService.getGlobal(),
+        ]);
+
+        setTrending(challengeData.items.slice(0, 3));
+        setStats({
+          challenges: challengeData.totalCount || challengeData.items.length,
+          players: leaderboardData.length || 0,
+        });
+      } catch {
+        setTrending([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
   }, []);
 
   return (
@@ -58,10 +75,8 @@ export default function HomePage() {
       </section>
 
       <section className="stats-row" aria-label="Platform statistics">
-        <Stat value="—" label="Active Challenges" accent="var(--accent)" />
-        <Stat value="—" label="Players" accent="var(--accent)" />
-        <Stat value="—" label="Bugs Squashed" accent="var(--accent)" />
-        <Stat value="—" label="Fastest Fix" accent="var(--accent)" />
+        <Stat value={stats.challenges} label="Active Challenges" accent="var(--accent)" />
+        <Stat value={stats.players} label="Players" accent="var(--accent)" />
       </section>
 
       <section aria-labelledby="trending-heading">
