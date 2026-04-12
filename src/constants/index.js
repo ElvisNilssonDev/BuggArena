@@ -6,12 +6,11 @@ export const ROUTES = {
   LEADERBOARD: "leaderboard",
   PROFILE: "profile",
   LOGIN: "login",
+  ADMIN: "admin",
 };
 
 export const LANGUAGES = ["JavaScript", "Python", "CSharp", "SQL"];
-
 export const DIFFICULTIES = ["Easy", "Medium", "Hard"];
-
 export const DIFFICULTY_POINTS = {
   Easy: 100,
   Medium: 250,

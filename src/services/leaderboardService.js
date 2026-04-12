@@ -1,18 +1,22 @@
 import api from "./api";
 
-function mapUser(u) {
+function mapGlobalUser(u) {
   return { ...u, id: u.userId || u.id };
+}
+
+function mapWeeklyUser(u) {
+  return { ...u, id: u.userId || u.id, weeklyPoints: u.totalPoints };
 }
 
 export const leaderboardService = {
   async getGlobal() {
     const { data } = await api.get("/leaderboard/global");
-    return data.map(mapUser);
+    return data.map(mapGlobalUser);
   },
 
   async getWeekly() {
     const { data } = await api.get("/leaderboard/weekly");
-    return data.map(mapUser);
+    return data.map(mapWeeklyUser);
   },
 
   async getUserStats(userId) {

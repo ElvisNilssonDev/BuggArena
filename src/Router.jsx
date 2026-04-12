@@ -7,6 +7,7 @@ import CreateChallengePage from "./pages/CreateChallengePage";
 import LeaderboardPage from "./pages/LeaderboardPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
+import AdminPage from "./pages/AdminPage";
 
 export default function Router() {
   const { page, param } = useNav();
@@ -26,6 +27,8 @@ export default function Router() {
       return <ProfilePage userId={param} />;
     case ROUTES.LOGIN:
       return <LoginPage />;
+    case ROUTES.ADMIN:
+      return <AdminPage />;
     default:
       return <HomePage />;
   }
