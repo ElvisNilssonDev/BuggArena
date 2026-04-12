@@ -42,6 +42,27 @@ function Navbar() {
           Leaderboard
         </button>
 
+        {isAuthenticated && user?.role === "Admin" && (
+          <button
+            className={cx(
+              "navbar__link",
+              page === ROUTES.ADMIN && "navbar__link--active"
+            )}
+            onClick={() => navigate(ROUTES.ADMIN)}
+            style={{
+              color:
+                page === ROUTES.ADMIN ? "var(--danger)" : "var(--danger)",
+              background:
+                page === ROUTES.ADMIN
+                  ? "var(--danger-bg)"
+                  : "transparent",
+              opacity: 0.85,
+            }}
+          >
+            Admin
+          </button>
+        )}
+
         {isAuthenticated && user ? (
           <button
             className="navbar__user"
