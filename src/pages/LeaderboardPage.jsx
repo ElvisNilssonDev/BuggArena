@@ -21,8 +21,8 @@ const PodiumSlot = memo(function PodiumSlot({ user, rank, points }) {
     >
       <Avatar username={user.username} size={rank === 1 ? "lg" : "md"} />
       <span className="podium-slot__name">{user.username}</span>
-      <span className="podium-slot__pts">
-        {points.toLocaleString()} pts
+     <span className="podium-slot__pts">
+        {(points || 0).toLocaleString()} pts
       </span>
       <div
         className="podium-slot__bar"
@@ -60,7 +60,7 @@ export default function LeaderboardPage() {
   }, [tab]);
 
   const getPoints = useCallback(
-    (u) => (tab === "global" ? u.totalPoints : u.weeklyPoints),
+    (u) => (tab === "global" ? (u.totalPoints || 0) : (u.weeklyPoints || u.totalPoints || 0)),
     [tab]
   );
 
